@@ -99,7 +99,7 @@ export default function AboutSection() {
               </h3>
 
               <p className="text-blue-100/70 leading-relaxed text-lg">
-                Saya adalah seorang developer yang berdedikasi untuk menciptakan sistem digital yang tidak hanya berfungsi dengan baik, tetapi juga memberikan pengalaman pengguna yang tak terlupakan.
+                Saya adalah seorang developer dan student yang berdedikasi untuk menciptakan sistem digital yang tidak hanya berfungsi dengan baik, tetapi juga memberikan pengalaman pengguna yang tak terlupakan.
               </p>
 
               <p className="text-blue-100/50 leading-relaxed">
