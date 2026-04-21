@@ -1,177 +1,89 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Github } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { 
+  Code2, 
+  Cpu, 
+  Globe, 
+  Layers, 
+  Terminal, 
+  Database, 
+  Smartphone, 
+  Palette 
+} from 'lucide-react';
 
-const projects = [
-  {
-    title: 'Portfolio Website',
-    description: 'Website personal untuk showcase skill, project, dan perjalanan belajar coding.',
-    tags: ['React', 'Tailwind'],
-    image: '💻',
-    status: 'Done',
-    github: '#',
-    demo: '#',
-  },
-  {
-    title: 'Task Manager',
-    description: 'Aplikasi sederhana untuk mengatur aktivitas harian dengan fitur checklist.',
-    tags: ['JavaScript'],
-    image: '📋',
-    status: 'Done',
-    github: '#',
-  },
-  {
-    title: 'Calculator App',
-    description: 'Kalkulator basic untuk latihan logic JavaScript.',
-    tags: ['JS'],
-    image: '🧮',
-    status: 'Done',
-    github: '#',
-  },
-  {
-    title: 'Landing UI',
-    description: 'Latihan membuat tampilan website modern dan responsive.',
-    tags: ['HTML', 'CSS'],
-    image: '🌐',
-    status: 'Learning',
-    github: '#',
-  },
-  {
-    title: 'Python Mini Tools',
-    description: 'Script kecil untuk automation dan latihan logic programming.',
-    tags: ['Python'],
-    image: '🐍',
-    status: 'Ongoing',
-    github: '#',
-  },
-  {
-    title: 'Code Experiments',
-    description: 'Eksperimen berbagai teknologi baru yang sedang dipelajari.',
-    tags: ['Explore'],
-    image: '⚡',
-    status: 'Explore',
-  },
+const skills = [
+  { name: 'React / Next.js', icon: Code2, color: 'text-cyan-400' },
+  { name: 'TypeScript', icon: Terminal, color: 'text-blue-400' },
+  { name: 'Tailwind CSS', icon: Palette, color: 'text-cyan-300' },
+  { name: 'Node.js', icon: Cpu, color: 'text-green-400' },
+  { name: 'PostgreSQL / Supabase', icon: Database, color: 'text-blue-500' },
+  { name: 'Three.js / Fiber', icon: Globe, color: 'text-white' },
+  { name: 'React Native', icon: Smartphone, color: 'text-indigo-400' },
+  { name: 'Framer Motion', icon: Layers, color: 'text-pink-400' },
 ];
 
-export default function ProjectsSection() {
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1 }
+};
+
+export default function SkillSection() {
   return (
-    <section id="projects" className="py-24 bg-black text-white">
-
-      <div className="container mx-auto px-4">
-
-        {/* TITLE */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="text-center mb-20"
-        >
-          <p className="text-gray-500 mb-2 tracking-widest text-sm">
-            MY WORK
-          </p>
-
-          <h2 className="text-4xl md:text-5xl font-bold">
-            Selected Projects
+    <section id="skills" className="py-24 px-4 relative overflow-hidden bg-[#0a192f]">
+      <div className="container mx-auto max-w-6xl">
+        
+        {/* Title */}
+        <div className="flex flex-col items-center mb-16 text-center">
+          <span className="text-cyan-400 font-mono text-xs tracking-[0.4em] uppercase mb-3">
+            Expertise
+          </span>
+          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight">
+            Tech <span className="text-cyan-400 italic">Arsenal</span>
           </h2>
-
-          <div className="w-16 h-[2px] bg-white/30 mx-auto mt-4" />
-        </motion.div>
-
-        {/* GRID */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-          {projects.map((project, index) => (
-
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-
-              <div className="group relative h-full p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition duration-300">
-
-                {/* glow effect */}
-                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition blur-xl bg-white/5" />
-
-                {/* CONTENT */}
-                <div className="relative z-10">
-
-                  {/* ICON */}
-                  <div className="flex items-center justify-center h-24 mb-4 text-5xl border border-white/10 rounded-xl bg-black">
-                    {project.image}
-                  </div>
-
-                  {/* TITLE */}
-                  <div className="flex justify-between items-center mb-2">
-                    <h3 className="font-semibold text-lg">
-                      {project.title}
-                    </h3>
-
-                    <span className="text-xs text-gray-400 border border-white/10 px-2 py-1 rounded-full">
-                      {project.status}
-                    </span>
-                  </div>
-
-                  {/* DESC */}
-                  <p className="text-sm text-gray-400 mb-4">
-                    {project.description}
-                  </p>
-
-                  {/* TAGS */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs px-2 py-1 border border-white/10 rounded-md text-gray-300"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* BUTTON */}
-                  <div className="flex gap-2">
-
-                    {project.github && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="rounded-full border-white/20 text-white hover:bg-white hover:text-black"
-                        asChild
-                      >
-                        <a href={project.github}>
-                          <Github className="w-4 h-4 mr-1" />
-                          Code
-                        </a>
-                      </Button>
-                    )}
-
-                    {project.demo && (
-                      <Button
-                        size="sm"
-                        className="rounded-full bg-white text-black hover:bg-gray-200"
-                        asChild
-                      >
-                        <a href={project.demo}>
-                          <ExternalLink className="w-4 h-4 mr-1" />
-                          Demo
-                        </a>
-                      </Button>
-                    )}
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </motion.div>
-
-          ))}
-
+          <div className="w-16 h-1 bg-blue-600 mt-4 rounded-full" />
         </div>
 
+        {/* Skill Grid */}
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-6"
+        >
+          {skills.map((skill) => (
+            <motion.div
+              key={skill.name}
+              variants={itemVariants}
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="group relative p-8 rounded-3xl bg-[#112240]/40 border border-blue-400/10 backdrop-blur-xl hover:border-cyan-400/40 transition-all duration-300 shadow-xl"
+            >
+              {/* Glow Effect on Hover */}
+              <div className="absolute inset-0 bg-cyan-400/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-3xl" />
+              
+              <div className="flex flex-col items-center gap-4 relative z-10">
+                <div className={`p-4 rounded-2xl bg-blue-950/50 ${skill.color} group-hover:bg-cyan-500 group-hover:text-[#0a192f] transition-all duration-500 shadow-inner`}>
+                  <skill.icon size={32} />
+                </div>
+                <h3 className="text-sm font-bold text-blue-100 tracking-wide uppercase group-hover:text-cyan-400 transition-colors">
+                  {skill.name}
+                </h3>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
+
+      {/* Background Decor */}
+      <div className="absolute top-1/2 left-0 w-72 h-72 bg-blue-600/10 blur-[120px] -z-10" />
+      <div className="absolute bottom-0 right-0 w-72 h-72 bg-cyan-600/10 blur-[120px] -z-10" />
     </section>
   );
 }

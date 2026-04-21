@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Send, Loader2 } from 'lucide-react';
+import { Mail, MapPin, Send, Loader2, MessageSquare, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -19,13 +19,19 @@ const contactInfo = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'farizi6772@gmail.com',
-    href: 'mailto:emailkamu@gmail.com',
+    value: 'kaysanaltaf@gmail.com',
+    href: 'mailto:kaysanaltaf@gmail.com',
   },
   {
     icon: MapPin,
     label: 'Lokasi',
-    value: 'Banda Aceh, Indonesia',
+    value: 'Indonesia',
+    href: '#',
+  },
+  {
+    icon: Globe,
+    label: 'Timezone',
+    value: 'WIB (GMT+7)',
     href: '#',
   },
 ];
@@ -41,7 +47,7 @@ export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
@@ -49,15 +55,15 @@ export default function ContactSection() {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
 
     const result = contactSchema.safeParse(formData);
     if (!result.success) {
-      const fieldErrors = {};
+      const fieldErrors: Record<string, string> = {};
       result.error.errors.forEach((err) => {
-        fieldErrors[err.path[0]] = err.message;
+        if (err.path[0]) fieldErrors[err.path[0] as string] = err.message;
       });
       setErrors(fieldErrors);
       return;
@@ -73,15 +79,15 @@ export default function ContactSection() {
       if (error) throw error;
 
       toast({
-        title: 'Pesan Terkirim 🚀',
-        description: 'Terima kasih! Saya akan membalas secepat mungkin.',
+        title: 'Transmission Success 🚀',
+        description: 'Pesan telah diterima. Saya akan segera menghubungi Anda.',
       });
 
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
       toast({
-        title: 'Gagal Mengirim',
-        description: 'Terjadi kesalahan, coba lagi nanti.',
+        title: 'Transmission Failed',
+        description: 'Terjadi gangguan pada sistem. Silakan coba beberapa saat lagi.',
         variant: 'destructive',
       });
     } finally {
@@ -90,87 +96,140 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-32 bg-black text-white">
-      <div className="container mx-auto px-4">
+    <section id="contact" className="relative py-24 md:py-32 bg-[#0a192f] text-white overflow-hidden">
+      
+      {/* Background Decor */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 blur-[120px] rounded-full -z-0" />
+
+      <div className="container mx-auto px-4 relative z-10">
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          viewport={{ once: true }}
+          className="text-center mb-20"
         >
-          <span className="text-gray-400 block mb-2">
-            Contact
+          <span className="text-cyan-400 font-mono text-xs tracking-[0.4em] uppercase mb-3 block">
+            Get In Touch
           </span>
 
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Hubungi Saya
+          <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">
+            Start a <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Conversation</span>
           </h2>
 
-          <div className="w-20 h-1 bg-white/30 mx-auto rounded-full" />
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-cyan-400 mx-auto rounded-full" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 max-w-6xl mx-auto">
 
-          {/* Info */}
-          <motion.div className="space-y-8">
-
+          {/* Info Side */}
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="lg:col-span-2 space-y-10"
+          >
             <div>
-              <h3 className="text-2xl font-bold mb-4">
-                Mari Terhubung 🚀
+              <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
+                <MessageSquare className="text-cyan-400 w-6 h-6" />
+                Let's Build Something
               </h3>
-
-              <p className="text-gray-400 leading-relaxed">
-                Saya terbuka untuk diskusi, kolaborasi, atau sekadar berbagi
-                tentang dunia teknologi dan programming. Jangan ragu untuk
-                menghubungi saya.
+              <p className="text-blue-100/60 leading-relaxed text-lg italic">
+                "Setiap baris kode dimulai dengan sebuah percakapan."
+              </p>
+              <p className="mt-4 text-blue-100/60 leading-relaxed">
+                Apakah Anda memiliki ide proyek atau sekadar ingin menyapa? Saya selalu terbuka untuk diskusi teknologi baru.
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div className="grid gap-4">
               {contactInfo.map((info) => (
-                <div
+                <a
                   key={info.label}
-                  className="flex items-center gap-4 p-4 bg-white/5 border border-white/10 rounded-xl"
+                  href={info.href}
+                  className="flex items-center gap-5 p-5 bg-[#112240]/40 backdrop-blur-sm border border-blue-400/10 rounded-2xl hover:border-cyan-400/40 hover:bg-[#112240]/60 transition-all group"
                 >
-                  <info.icon className="h-5 w-5 text-white/70" />
-                  <div>
-                    <p className="text-sm text-gray-500">{info.label}</p>
-                    <p>{info.value}</p>
+                  <div className="p-3 bg-blue-900/40 rounded-xl group-hover:bg-cyan-500/20 group-hover:scale-110 transition-all">
+                    <info.icon className="h-6 w-6 text-cyan-400" />
                   </div>
-                </div>
+                  <div>
+                    <p className="text-xs font-mono uppercase tracking-widest text-blue-300/50 mb-1">{info.label}</p>
+                    <p className="font-medium text-blue-100 group-hover:text-cyan-300 transition-colors">{info.value}</p>
+                  </div>
+                </a>
               ))}
             </div>
-
           </motion.div>
 
-          {/* Form */}
-          <motion.div>
-            <form onSubmit={handleSubmit} className="space-y-6 p-6 bg-white/5 border border-white/10 rounded-2xl">
-
-              <div className="grid sm:grid-cols-2 gap-4">
-                <Input name="name" placeholder="Nama" value={formData.name} onChange={handleChange} />
-                <Input name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
+          {/* Form Side */}
+          <motion.div
+             initial={{ opacity: 0, x: 30 }}
+             whileInView={{ opacity: 1, x: 0 }}
+             viewport={{ once: true }}
+             className="lg:col-span-3"
+          >
+            <form onSubmit={handleSubmit} className="space-y-6 p-6 md:p-8 bg-[#112240]/40 backdrop-blur-xl border border-blue-400/10 rounded-3xl shadow-2xl">
+              
+              <div className="grid sm:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Input 
+                    name="name" 
+                    placeholder="Nama Lengkap" 
+                    value={formData.name} 
+                    onChange={handleChange}
+                    className="bg-blue-950/30 border-blue-400/20 focus:ring-1 focus:ring-cyan-400/50 focus:border-cyan-400/50 h-12 rounded-xl transition-all"
+                  />
+                  {errors.name && <p className="text-[10px] text-red-400 ml-2 font-mono uppercase tracking-tighter">{errors.name}</p>}
+                </div>
+                <div className="space-y-2">
+                  <Input 
+                    name="email" 
+                    placeholder="Email Address" 
+                    value={formData.email} 
+                    onChange={handleChange}
+                    className="bg-blue-950/30 border-blue-400/20 focus:ring-1 focus:ring-cyan-400/50 focus:border-cyan-400/50 h-12 rounded-xl transition-all"
+                  />
+                  {errors.email && <p className="text-[10px] text-red-400 ml-2 font-mono uppercase tracking-tighter">{errors.email}</p>}
+                </div>
               </div>
 
-              <Input name="subject" placeholder="Subjek" value={formData.subject} onChange={handleChange} />
+              <div className="space-y-2">
+                <Input 
+                  name="subject" 
+                  placeholder="Subjek Pesan" 
+                  value={formData.subject} 
+                  onChange={handleChange}
+                  className="bg-blue-950/30 border-blue-400/20 focus:ring-1 focus:ring-cyan-400/50 focus:border-cyan-400/50 h-12 rounded-xl transition-all"
+                />
+                {errors.subject && <p className="text-[10px] text-red-400 ml-2 font-mono uppercase tracking-tighter">{errors.subject}</p>}
+              </div>
 
-              <Textarea name="message" placeholder="Tulis pesan..." value={formData.message} onChange={handleChange} />
+              <div className="space-y-2">
+                <Textarea 
+                  name="message" 
+                  placeholder="Ceritakan detail proyek atau pertanyaan Anda..." 
+                  value={formData.message} 
+                  onChange={handleChange}
+                  className="bg-blue-950/30 border-blue-400/20 focus:ring-1 focus:ring-cyan-400/50 focus:border-cyan-400/50 min-h-[150px] rounded-xl pt-4 transition-all"
+                />
+                {errors.message && <p className="text-[10px] text-red-400 ml-2 font-mono uppercase tracking-tighter">{errors.message}</p>}
+              </div>
 
               <Button
                 type="submit"
-                className="w-full rounded-full bg-white text-black hover:bg-gray-200"
+                className="w-full h-14 rounded-xl bg-blue-600 text-white hover:bg-cyan-500 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-bold uppercase tracking-[0.2em] text-xs shadow-lg shadow-blue-900/50 overflow-hidden relative group"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
-                  <>
+                  <div className="flex items-center justify-center">
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Mengirim...
-                  </>
+                    <span>Transmitting...</span>
+                  </div>
                 ) : (
-                  <>
-                    <Send className="h-4 w-4 mr-2" />
-                    Kirim Pesan
-                  </>
+                  <div className="flex items-center justify-center">
+                    <Send className="h-4 w-4 mr-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    <span>Send Message</span>
+                  </div>
                 )}
               </Button>
 

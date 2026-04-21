@@ -1,77 +1,82 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Github } from 'lucide-react';
+import { ExternalLink, Github, Code2, Globe, Terminal, Cpu, Database, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const projects = [
   {
-    title: 'Website Portfolio',
-    description: 'Website portfolio pribadi yang saya buat untuk menampilkan project dan skill saya.',
-    tags: ['React', 'Tailwind'],
-    image: '💻',
-    github: '#',
+    title: 'Modern Portfolio',
+    description: 'Arsitektur website portfolio dengan performa tinggi, optimasi SEO, dan animasi halus.',
+    tags: ['Next.js', 'Tailwind', 'Framer'],
+    icon: <Globe className="w-10 h-10 text-cyan-400" />,
+    github: 'https://github.com/Acan22-collab',
     demo: '#',
   },
   {
-    title: 'To-Do List App',
-    description: 'Aplikasi sederhana untuk mencatat tugas harian dengan fitur tambah dan checklist.',
-    tags: ['JavaScript', 'HTML', 'CSS'],
-    image: '📝',
+    title: 'Neural Task Manager',
+    description: 'Aplikasi manajemen tugas cerdas dengan sinkronisasi state lokal dan sistem prioritas.',
+    tags: ['React', 'Zustand', 'Vite'],
+    icon: <Zap className="w-10 h-10 text-blue-400" />,
     github: '#',
   },
   {
-    title: 'Kalkulator Sederhana',
-    description: 'Project latihan JavaScript untuk membuat kalkulator dengan operasi dasar.',
-    tags: ['JavaScript'],
-    image: '🧮',
+    title: 'Data Engine v1',
+    description: 'Kalkulator komputasi presisi tinggi untuk menangani operasi matematika kompleks di browser.',
+    tags: ['TypeScript', 'MathJS'],
+    icon: <Cpu className="w-10 h-10 text-cyan-400" />,
     github: '#',
   },
   {
-    title: 'Landing Page',
-    description: 'Halaman website modern untuk latihan desain UI dan responsive layout.',
-    tags: ['HTML', 'CSS'],
-    image: '🌐',
+    title: 'Cloud Landing Page',
+    description: 'Desain UI futuristik untuk layanan cloud computing dengan fokus pada konversi pengguna.',
+    tags: ['HTML', 'CSS', 'PostCSS'],
+    icon: <Database className="w-10 h-10 text-blue-400" />,
     github: '#',
   },
   {
-    title: 'Python Mini Tools',
-    description: 'Kumpulan script Python sederhana untuk membantu tugas sehari-hari.',
-    tags: ['Python'],
-    image: '🐍',
+    title: 'Python Automation',
+    description: 'Skrip otomatisasi tingkat lanjut untuk efisiensi workflow dan pemrosesan data masif.',
+    tags: ['Python', 'Automation'],
+    icon: <Terminal className="w-10 h-10 text-cyan-400" />,
     github: '#',
   },
   {
-    title: 'Eksperimen Coding',
-    description: 'Project kecil yang dibuat saat mencoba teknologi baru.',
-    tags: ['Learning'],
-    image: '⚡',
+    title: 'Creative Lab',
+    description: 'Eksperimen teknologi terbaru termasuk integrasi AI dan WebGL untuk pengalaman interaktif.',
+    tags: ['Innovation', 'Web3'],
+    icon: <Code2 className="w-10 h-10 text-blue-400" />,
+    github: '#',
   },
 ];
 
 export default function ProjectsSection() {
   return (
-    <section id="projects" className="py-20 md:py-32 bg-black text-white">
+    <section id="projects" className="py-24 md:py-32 bg-[#0a192f] text-white overflow-hidden">
+      
+      {/* Background Decor */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent -z-0" />
 
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative z-10">
 
-        {/* Title */}
+        {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          viewport={{ once: true }}
+          className="text-center mb-20"
         >
-          <span className="text-gray-400 block mb-2">
-            Portfolio
+          <span className="text-cyan-400 font-mono text-xs tracking-[0.5em] uppercase mb-3 block">
+            Showcase
           </span>
 
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Project Saya
+          <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">
+            Mastered <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Works</span>
           </h2>
 
-          <div className="w-20 h-1 bg-white/30 mx-auto rounded-full" />
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-cyan-400 mx-auto rounded-full" />
         </motion.div>
 
-        {/* Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        {/* Project Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
 
           {projects.map((project, index) => (
 
@@ -79,23 +84,30 @@ export default function ProjectsSection() {
               key={project.title}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
             >
 
-              <div className="h-full p-6 bg-white/5 border border-white/10 rounded-2xl hover:border-white/30 hover:-translate-y-2 transition-all duration-300">
-
-                {/* Icon */}
-                <div className="aspect-video rounded-xl mb-4 flex items-center justify-center bg-white/5 border border-white/10">
-                  <span className="text-5xl">{project.image}</span>
+              <div className="group relative h-full p-8 bg-[#112240]/40 backdrop-blur-md border border-blue-400/10 rounded-3xl hover:border-cyan-400/40 hover:-translate-y-3 transition-all duration-500 shadow-2xl overflow-hidden">
+                
+                {/* Visual Icon Container */}
+                <div className="aspect-video rounded-2xl mb-6 flex items-center justify-center bg-blue-950/50 border border-blue-400/10 group-hover:bg-blue-900/50 transition-colors relative overflow-hidden">
+                  <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+                  <motion.div 
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    className="relative z-10 p-4 bg-blue-900/20 rounded-full backdrop-blur-sm"
+                  >
+                    {project.icon}
+                  </motion.div>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-4">
 
-                  <h3 className="text-lg font-bold">
+                  <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
                     {project.title}
                   </h3>
 
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-blue-100/60 leading-relaxed min-h-[60px]">
                     {project.description}
                   </p>
 
@@ -104,7 +116,7 @@ export default function ProjectsSection() {
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-1 text-xs rounded-md bg-white/10 border border-white/20"
+                        className="px-3 py-1 text-[10px] font-mono uppercase tracking-widest rounded-lg bg-blue-900/40 border border-blue-400/20 text-blue-300"
                       >
                         {tag}
                       </span>
@@ -112,22 +124,22 @@ export default function ProjectsSection() {
                   </div>
 
                   {/* Buttons */}
-                  <div className="flex gap-2 pt-2">
+                  <div className="flex gap-3 pt-4 border-t border-blue-400/5">
 
                     {project.github && (
-                      <Button variant="outline" size="sm" className="rounded-full border-white/20 text-white hover:bg-white hover:text-black" asChild>
+                      <Button variant="outline" size="sm" className="flex-1 rounded-xl border-blue-400/20 bg-transparent text-blue-100 hover:bg-blue-400/10 hover:border-cyan-400/50" asChild>
                         <a href={project.github}>
-                          <Github className="h-4 w-4 mr-1" />
+                          <Github className="h-4 w-4 mr-2" />
                           Code
                         </a>
                       </Button>
                     )}
 
                     {project.demo && (
-                      <Button size="sm" className="rounded-full bg-white text-black hover:bg-gray-200" asChild>
+                      <Button size="sm" className="flex-1 rounded-xl bg-blue-600 text-white hover:bg-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 transition-all" asChild>
                         <a href={project.demo}>
-                          <ExternalLink className="h-4 w-4 mr-1" />
-                          Demo
+                          <ExternalLink className="h-4 w-4 mr-2" />
+                          Live
                         </a>
                       </Button>
                     )}
